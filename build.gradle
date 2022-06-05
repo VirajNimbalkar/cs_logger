@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.0'
+    id "project-report"
+}
+
+group 'com.cs'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+sourceCompatibility = '17'
+ ext {
+     lambokVersion = "1.18.24"
+     guavaVersion = "31.1-jre"
+     projectReactorVersion = "3.4.18"
+ }
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+dependencies {
+    implementation platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+
+    implementation ("com.google.guava:guava:${guavaVersion}")
+    implementation ("io.projectreactor:reactor-core:${projectReactorVersion}")
+
+    compileOnly ("org.projectlombok:lombok:${lambokVersion}")
+    runtimeOnly ("org.hsqldb:hsqldb")
+
+    annotationProcessor ("org.projectlombok:lombok:${lambokVersion}")
+
+    testCompileOnly ("org.projectlombok:lombok:${lambokVersion}")
+    testAnnotationProcessor ("org.projectlombok:lombok:${lambokVersion}")
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
